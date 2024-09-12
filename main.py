@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from tkinter import *
+from tkinter import messagebox
 import requests
 import webbrowser
 
@@ -67,7 +68,7 @@ def iniciar_busqueda():
         crear_cards(productos_list)
 
     except IndexError:
-        print("No se pudo encontrar los productos buscados")
+        messagebox.showwarning(title="Advertencia", message="No hay resultados encontrados, vuelva a intentarlo")
 
 Ventana = Tk()
 
