@@ -13,28 +13,22 @@ def obtener_productos_finales(productos:list):
 def abrir_link(url):
     webbrowser.open(url)
 
-#Funcion que agrega los frames (12)
 def crear_cards(productos_list):
     lista_productos = obtener_productos_finales(productos_list)
 
     for i in range(len(lista_productos)):
-        # frame contenedor de cada card
         producto = Frame(contenedor_productos, bg="gray") 
         producto.grid(row=i // 4, column=i % 4, padx=1, pady=5)
 
-        # marca
         marca = Label(producto, text=lista_productos[i]["marca"],width=30,bg="yellow")
         marca.pack(pady=1, padx=2)
 
-        # descripcion
         descripcion = Label(producto, text=lista_productos[i]["descripcion"], anchor="center", wraplength=200, width=30, height=5)
         descripcion.pack(pady=5)
 
-        # precio
         precio = Label(producto, text=lista_productos[i]["precio"])
         precio.pack(pady=2)
 
-        # detalles
         def ver_detalle(link=productos_list[i]["link"]):
             abrir_link(link)
 
@@ -42,10 +36,8 @@ def crear_cards(productos_list):
         detalles.pack(pady=2)
 
 def obtener_array_productos(peticion):
-    #.text es para enviar el archivo html como texto y el segundo argumento es para parsearlo
     soup = BeautifulSoup(peticion.text, features='html.parser')
 
-    #El metodo .find() sirve para buscar una etiqueta como primer parametro y como segundo una clase de la misma etiqueta para ser mas especifico
     box = soup.find_all('li', class_="ui-search-layout__item")
 
     productos_list= []
@@ -79,26 +71,21 @@ def iniciar_busqueda():
 
 Ventana = Tk()
 
-# Configuracion ventana
 Ventana.title("Mercadito humilde")
 Ventana.geometry("900x750")
 Ventana.resizable(0,0)
 Ventana.config(bg="lightblue")
 
-# etiqueta principal 
 nombre_app = Label(Ventana, text="Listado de productos",bg="yellow",height=2, font=15)
 nombre_app.pack(fill=BOTH)
 
-# input
 buscador = Entry(Ventana, font='Helvetica 10')
 buscador.pack()
 
-# boton
 boton = Button(Ventana, text="buscar", command=iniciar_busqueda, width=10, height=1)
 boton.pack()
 
 contenedor_productos = Frame(Ventana)
 contenedor_productos.pack(fill=BOTH, pady=10, padx=5)
 
-# esta siempre tiene que ser la linea final
 Ventana.mainloop()
